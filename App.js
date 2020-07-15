@@ -1,114 +1,122 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
+import Providers from './src/Providers';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+  Confirm,
+  Login,
+  Empresa,
+  Empresas,
+  Pedidos,
+  Product,
+  Opinion,
+  Profile,
+  Signup,
+} from './src/views';
+import Loader from './src/views/Loader';
+import Cart from './src/views/Cart';
+import LogoutButton from './src/views/LogoutButton';
+import ProfileButton from './src/components/ProfileButton';
+import Pedido from './src/views/Pedido';
+import Geolocation from '@react-native-community/geolocation';
+import Map from './src/components/Map';
+import Success from './src/views/Success';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const App=() => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+Geolocation.setRNConfiguration({
+  enableHighAccuracy: false,
+  timeout: 5000,
+  maximumAge: 10000,
 });
 
-export default App;
+const noBackAndCenter = {headerLeft: () => null, headerTitleAlign: 'center'};
+const center = {headerTitleAlign: 'center'};
+
+const MainStack = createStackNavigator();
+
+function Main() {
+  return (
+    <Providers>
+      <NavigationContainer>
+        <MainStack.Navigator initialRouteName="Loader">
+          <MainStack.Screen
+            name="Loader"
+            component={Loader}
+            options={{header: () => null}}
+          />
+          <MainStack.Screen
+            name="Cart"
+            component={Cart}
+            options={{title: 'Carro'}}
+          />
+          <MainStack.Screen
+            name="FullMap"
+            component={Map}
+            options={{title: 'Mapa'}}
+          />
+          <MainStack.Screen
+            name="Pedidos"
+            component={Pedidos}
+            options={{title: 'Pedidos', headerLeft: () => <LogoutButton />}}
+          />
+          <MainStack.Screen
+            name="Success"
+            component={Success}
+            options={{title: 'Pedidos'}}
+          />
+          <MainStack.Screen
+            name="Pedido"
+            component={Pedido}
+            options={{title: 'Detalle Pedido'}}
+          />
+          <MainStack.Screen
+            name="Opinion"
+            component={Opinion}
+            options={{title: 'Opinion'}}
+          />
+          <MainStack.Screen
+            name="Profile"
+            component={Profile}
+            options={{title: 'Perfil'}}
+          />
+          <MainStack.Screen
+            name="Confirmar"
+            component={Confirm}
+            options={{title: 'Confirmar Orden'}}
+          />
+          <MainStack.Screen
+            name="Signup"
+            component={Signup}
+            options={{title: 'Crear Cuenta', ...center}}
+          />
+          <MainStack.Screen
+            name="Login"
+            component={Login}
+            options={{title: 'Login', ...noBackAndCenter}}
+          />
+          <MainStack.Screen
+            name="Empresas"
+            component={Empresas}
+            options={{
+              title: 'Empresas',
+              ...noBackAndCenter,
+              headerLeft: () => <LogoutButton />,
+              headerRight: () => <ProfileButton />,
+            }}
+          />
+          <MainStack.Screen
+            name="Empresa"
+            component={Empresa}
+            options={{title: 'Productos'}}
+          />
+          <MainStack.Screen
+            name="Producto"
+            component={Product}
+            options={{title: 'Detalles del Producto'}}
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </Providers>
+  );
+}
+
+export default Main;
