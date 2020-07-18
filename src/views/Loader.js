@@ -5,12 +5,12 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useAuth} from '../context/auth';
 
 const Loader = () => {
-  const [finished, isLoggedIn] = useAuthState();
+  const [finished, isLoggedIn, user] = useAuthState();
   useAuth();
   const {dispatch} = useNavigation();
   useEffect(() => {
-    if (finished && isLoggedIn) {
-      if (true) {
+    if (finished && isLoggedIn && user) {
+      if (user.user_role === 'Employed') {
         dispatch(
           CommonActions.reset({
             index: 0,
@@ -34,7 +34,7 @@ const Loader = () => {
       );
     }
     //eslint-disable-next-line
-  }, [finished, isLoggedIn]);
+  }, [finished, isLoggedIn, user]);
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
