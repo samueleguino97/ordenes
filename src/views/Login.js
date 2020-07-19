@@ -14,13 +14,22 @@ export default function Login({navigation}) {
 
   async function handleLogin() {
     try {
-      await login(userCredentials.email, userCredentials.password);
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'Empresas'}],
-        }),
-      );
+      const user = await login(userCredentials.email, userCredentials.password);
+      if (user.user_role === 'Employed') {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'Pedidos'}],
+          }),
+        );
+      } else {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'Empresas'}],
+          }),
+        );
+      }
     } catch (e) {
       console.warn(e);
     }

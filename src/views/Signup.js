@@ -32,13 +32,22 @@ export default function Signup() {
   async function handleSignup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
-    await register(signupForm);
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{name: 'Empresas'}],
-      }),
-    );
+    const user = await register(signupForm);
+    if (user.user_role === 'Employed') {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Pedidos'}],
+        }),
+      );
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Empresas'}],
+        }),
+      );
+    }
   }
 
   return (

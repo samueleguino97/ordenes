@@ -9,13 +9,15 @@ export default function useAuthState() {
 
   useEffect(() => {
     AsyncStorage.getItem('access_token').then(token => {
-      setIsLoggedIn(!!token);
-      setFinishedFetching(true);
-    });
-    AsyncStorage.getItem('user').then(token => {
-      if (token) {
-        setUser(JSON.parse(token));
-      }
+      AsyncStorage.getItem('user').then(userToken => {
+        if (userToken) {
+          setUser(JSON.parse(userToken));
+        }
+        if (token) {
+          setIsLoggedIn(!!token);
+        }
+        setFinishedFetching(true);
+      });
     });
   }, []);
 
