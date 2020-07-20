@@ -26,13 +26,14 @@ export function useAuth() {
 
   async function handleRegister(userData) {
     const userResult = await post('register', userData);
+    console.log('result', userResult);
     const retrievedUser = new User(userResult);
 
     backend.setAccessToken(retrievedUser.access_token);
     await AsyncStorage.setItem('access_token', retrievedUser.access_token);
     await AsyncStorage.setItem('user', JSON.stringify(userResult));
     authContext.setUser(retrievedUser);
-    return userResult;
+    return retrievedUser;
   }
 
   async function handleLogin(email, password) {

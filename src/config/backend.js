@@ -15,15 +15,14 @@ class Backend {
   }
 
   async request(endpoint = '', method = '', data = {}) {
+    console.log('REQUESTING');
     let requestUrl = `${this.backendUrl}/${endpoint}`;
     let headers = {};
 
-    console.log(endpoint);
     const options = {};
 
     const accessToken = await getAccessToken();
     if (accessToken) {
-      console.log(accessToken);
       data.access_token = accessToken;
     }
 
@@ -43,26 +42,19 @@ class Backend {
       options.headers = headers;
       options.method = method;
     }
-    console.log(data);
+    console.log('STARTING REQUEST');
     const requestResult = await fetch(requestUrl, options);
-    console.log(requestResult);
-    if (requestResult.status === 404) {
+
+    console.log('FINISHED REQUEST');
+    if (requestResult.status !== 404) {
       let error = new Error();
 
       error = {...error, message: 'Endpoint not found'};
     }
 
     let resultContent = await requestResult.json();
-
-    if (requestResult.status === 200) {
-      return resultContent;
-    } else {
-      let error = new Error();
-
-      error = {...error, ...resultContent};
-
-      throw error;
-    }
+    console.log(resultContent);
+    return resultContent;
   }
 
   setAccessToken(accessToken) {

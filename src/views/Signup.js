@@ -33,6 +33,8 @@ export default function Signup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
     const user = await register(signupForm);
+    console.log(user);
+    console.log('THIS IS HAPPENING');
     if (user.user_role === 'Employed') {
       navigation.dispatch(
         CommonActions.reset({
@@ -85,15 +87,6 @@ export default function Signup() {
           </View>
         </View>
 
-        <View>
-          <CheckBox
-            onChange={() =>
-              setClientType(clientType === 'Client' ? 'Employed' : 'Client')
-            }
-            value={clientType === 'Employed'}
-          />
-          <Text>Taxista?</Text>
-        </View>
         <View style={styles.containerButton}>
           <TouchableOpacity onPress={handleSignup}>
             <View style={styles.button}>

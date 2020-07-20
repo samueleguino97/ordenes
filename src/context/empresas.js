@@ -1,5 +1,6 @@
 import React, {useState, useContext, useCallback, useEffect} from 'react';
 import useBackendRequests from '../hooks/useBackend';
+import {getAccessToken} from '../config/backend';
 
 const EmpresasContext = React.createContext({
   empresas: [],
@@ -17,8 +18,12 @@ function EmpresasProvider({children}) {
   const {get} = useBackendRequests();
 
   const refreshCompanies = useCallback(() => {
-    get('get_companies').then(resultados => {
-      setEmpresas(resultados);
+    getAccessToken().then(token => {
+      if (token) {
+        get('get_companies').then(resultados => {
+          setEmpresas(resultados);
+        });
+      }
     });
   }, []);
 
