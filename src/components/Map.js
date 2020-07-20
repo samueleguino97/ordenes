@@ -10,7 +10,6 @@ import {
   PermissionsAndroid,
   Dimensions,
 } from 'react-native';
-import MapboxGL from '@react-native-mapbox-gl/maps';
 import Geolocation from '@react-native-community/geolocation';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
@@ -263,12 +262,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(68, 154, 235, 1)',
   },
 });
-
-const layerStyles = {
-  route: {
-    lineColor: 'turquoise',
-    lineCap: MapboxGL.LineJoin.Round,
-    lineWidth: 3,
-    lineOpacity: 0.84,
-  },
-};
