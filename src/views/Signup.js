@@ -33,8 +33,6 @@ export default function Signup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
     const user = await register(signupForm);
-    console.log(user);
-    console.log('THIS IS HAPPENING');
     if (user.user_role === 'Employed') {
       navigation.dispatch(
         CommonActions.reset({
@@ -82,6 +80,29 @@ export default function Signup() {
               secureTextEntry={true}
               onChangeText={setField('password')}
               placeholder="Password"
+              style={{width: '100%'}}
+            />
+          </View>
+          <View style={styles.textInput}>
+            <TextInput
+              onChangeText={setField('address')}
+              placeholder="Direccion"
+              style={{width: '100%'}}
+            />
+          </View>
+          <View style={styles.textInput}>
+            <TextInput
+              secureTextEntry={true}
+              onChangeText={setField('phone')}
+              placeholder="Telefono Fijo"
+              style={{width: '100%'}}
+            />
+          </View>
+          <View style={styles.textInput}>
+            <TextInput
+              secureTextEntry={true}
+              onChangeText={setField('mobile')}
+              placeholder="Telefono Celular"
               style={{width: '100%'}}
             />
           </View>

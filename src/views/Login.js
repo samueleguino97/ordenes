@@ -43,7 +43,7 @@ export default function Login({navigation}) {
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.img}>
-          <Image style={styles.image} />
+          <Image style={styles.image} source={require('../assets/Logo.jpeg')} />
         </View>
         <View style={styles.inputs}>
           <View style={styles.textInput}>
