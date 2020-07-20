@@ -21,6 +21,7 @@ import Pedido from './src/views/Pedido';
 import Geolocation from '@react-native-community/geolocation';
 import Map from './src/components/Map';
 import Success from './src/views/Success';
+import {ScrollView} from 'react-native';
 
 Geolocation.setRNConfiguration({
   enableHighAccuracy: false,
@@ -35,87 +36,89 @@ const MainStack = createStackNavigator();
 
 function Main() {
   return (
-    <Providers>
-      <NavigationContainer>
-        <MainStack.Navigator initialRouteName="Loader">
-          <MainStack.Screen
-            name="Loader"
-            component={Loader}
-            options={{header: () => null}}
-          />
-          <MainStack.Screen
-            name="Cart"
-            component={Cart}
-            options={{title: 'Carro'}}
-          />
-          <MainStack.Screen
-            name="FullMap"
-            component={Map}
-            options={{title: 'Mapa'}}
-          />
-          <MainStack.Screen
-            name="Pedidos"
-            component={Pedidos}
-            options={{title: 'Pedidos', headerLeft: () => <LogoutButton />}}
-          />
-          <MainStack.Screen
-            name="Success"
-            component={Success}
-            options={{title: 'Pedidos'}}
-          />
-          <MainStack.Screen
-            name="Pedido"
-            component={Pedido}
-            options={{title: 'Detalle Pedido'}}
-          />
-          <MainStack.Screen
-            name="Opinion"
-            component={Opinion}
-            options={{title: 'Opinion'}}
-          />
-          <MainStack.Screen
-            name="Profile"
-            component={Profile}
-            options={{title: 'Perfil'}}
-          />
-          <MainStack.Screen
-            name="Confirmar"
-            component={Confirm}
-            options={{title: 'Confirmar Orden'}}
-          />
-          <MainStack.Screen
-            name="Signup"
-            component={Signup}
-            options={{title: 'Crear Cuenta', ...center}}
-          />
-          <MainStack.Screen
-            name="Login"
-            component={Login}
-            options={{title: 'Login', ...noBackAndCenter}}
-          />
-          <MainStack.Screen
-            name="Empresas"
-            component={Empresas}
-            options={{
-              title: 'Empresas',
-              ...noBackAndCenter,
-              headerLeft: () => <LogoutButton />,
-              headerRight: () => <ProfileButton />,
-            }}
-          />
-          <MainStack.Screen
-            name="Empresa"
-            component={Empresa}
-            options={{title: 'Productos'}}
-          />
-          <MainStack.Screen
-            name="Producto"
-            component={Product}
-            options={{title: 'Detalles del Producto'}}
-          />
-        </MainStack.Navigator>
-      </NavigationContainer>
-    </Providers>
+    <ScrollView>
+      <Providers>
+        <NavigationContainer>
+          <MainStack.Navigator initialRouteName="Loader">
+            <MainStack.Screen
+              name="Loader"
+              component={Loader}
+              options={{header: () => null}}
+            />
+            <MainStack.Screen
+              name="Cart"
+              component={Cart}
+              options={{title: 'Carro'}}
+            />
+            <MainStack.Screen
+              name="FullMap"
+              component={Map}
+              options={{title: 'Mapa'}}
+            />
+            <MainStack.Screen
+              name="Pedidos"
+              component={Pedidos}
+              options={{title: 'Pedidos', headerLeft: () => <LogoutButton />}}
+            />
+            <MainStack.Screen
+              name="Success"
+              component={Success}
+              options={{title: 'Pedidos'}}
+            />
+            <MainStack.Screen
+              name="Pedido"
+              component={Pedido}
+              options={{title: 'Detalle Pedido'}}
+            />
+            <MainStack.Screen
+              name="Opinion"
+              component={Opinion}
+              options={{title: 'Opinion'}}
+            />
+            <MainStack.Screen
+              name="Profile"
+              component={Profile}
+              options={{title: 'Perfil'}}
+            />
+            <MainStack.Screen
+              name="Confirmar"
+              component={Confirm}
+              options={{title: 'Confirmar Orden'}}
+            />
+            <MainStack.Screen
+              name="Signup"
+              component={Signup}
+              options={{title: 'Crear Cuenta', ...center}}
+            />
+            <MainStack.Screen
+              name="Login"
+              component={Login}
+              options={{title: 'Login', ...noBackAndCenter}}
+            />
+            <MainStack.Screen
+              name="Empresas"
+              component={Empresas}
+              options={{
+                title: 'Empresas',
+                ...noBackAndCenter,
+                headerLeft: () => <LogoutButton />,
+                headerRight: () => <ProfileButton />,
+              }}
+            />
+            <MainStack.Screen
+              name="Empresa"
+              component={Empresa}
+              options={{title: 'Productos'}}
+            />
+            <MainStack.Screen
+              name="Producto"
+              component={Product}
+              options={{title: 'Detalles del Producto'}}
+            />
+          </MainStack.Navigator>
+        </NavigationContainer>
+      </Providers>
+    </ScrollView>
   );
 }
 
