@@ -58,32 +58,17 @@ const Confirm = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.containerTextInput}>
         <View>
-          <TextInput
-            placeholder="Nombre"
-            style={styles.textInput}
-            value={user?.username}
-          />
+          <TextInput placeholder="Nombre" style={styles.textInput} />
         </View>
         <View>
-          <TextInput
-            value={user?.email}
-            placeholder="Email"
-            style={styles?.textInput}
-          />
+          <TextInput placeholder="Email" style={styles?.textInput} />
         </View>
       </View>
       <View style={styles.containerMap}>
         <Map startLocation={startingLocation} mutable />
       </View>
       <View style={styles.containerMovilOptions}>
-        <TouchableOpacity onPress={() => setVehicle(1)}>
-          <View style={{alignItems: 'center'}}>
-            <RadioButton selected={vehicle === 1} />
-            <Text style={styles.movilOptions}>Moto</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setVehicle(2)}>
+        <TouchableOpacity onPress={() => setVehicle(vehicle === 1 ? 2 : 1)}>
           <View style={{alignItems: 'center'}}>
             <RadioButton selected={vehicle === 2} />
             <Text style={styles.movilOptions}>Automovil</Text>
@@ -91,12 +76,6 @@ const Confirm = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.containerDetails}>
-        <View style={styles.containerSendingPrice}>
-          <Text>
-            Costo Envio:
-            <Text style={styles.price}> Bs {15}</Text>
-          </Text>
-        </View>
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL PEDIDO:</Text>

@@ -7,19 +7,33 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useAuth} from '../context/auth';
 
 const Profile = () => {
+  const {user, logout} = useAuth();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerTextInputs}>
         <View>
-          <TextInput placeholder="Nombre" style={styles.textInput} />
+          <TextInput
+            defaultValue={user.username}
+            placeholder="Nombre"
+            style={styles.textInput}
+          />
         </View>
         <View>
-          <TextInput placeholder="Email" style={styles.textInput} />
+          <TextInput
+            defaultValue={user.email}
+            placeholder="Email"
+            style={styles.textInput}
+          />
         </View>
         <View>
-          <TextInput placeholder="Numero de celular" style={styles.textInput} />
+          <TextInput
+            defaultValue={user.mobile}
+            placeholder="Numero de celular"
+            style={styles.textInput}
+          />
         </View>
       </View>
       <View style={styles.containerButtons}>
@@ -35,7 +49,9 @@ const Profile = () => {
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={styles.button}>
-            <Text style={styles.textButton}>Logout</Text>
+            <Text style={styles.textButton} onPress={logout}>
+              Logout
+            </Text>
           </View>
         </TouchableOpacity>
       </View>

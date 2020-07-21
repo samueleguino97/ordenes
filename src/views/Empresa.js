@@ -22,19 +22,37 @@ const Empresa = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {empresa?.products?.map(producto => {
-        return (
-          <TouchableOpacity onPress={() => navigate('Producto', producto)}>
-            <View style={styles.producto}>
-              <Text style={styles.title}>{producto.name}</Text>
-              <View style={styles.productoImage} />
-              <Text>{parseFloat(producto.price).toFixed(2)} Bs.</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={styles.container}>
+        {empresa?.products?.map(producto => {
+          return (
+            <TouchableOpacity onPress={() => navigate('Producto', producto)}>
+              <View style={styles.producto}>
+                <Text style={styles.title}>{producto.name}</Text>
+                <View style={styles.productoImage} />
+                <Text>{parseFloat(producto.price).toFixed(2)} Bs.</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+      <TouchableOpacity
+        onPress={() =>
+          navigate('FullMap', {
+            start: [parseFloat(empresa?.lng), parseFloat(empresa?.lat)],
+          })
+        }>
+        <View
+          style={{
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'lightgray',
+          }}>
+          <Text>Ver Ubicacion</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 

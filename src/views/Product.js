@@ -52,11 +52,6 @@ const Product = ({navigation: {navigate}}) => {
             <Text>Agregar</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.extras} onPress={navigateToExtras}>
-            <Text>Extras</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   );

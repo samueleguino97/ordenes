@@ -25,27 +25,38 @@ export default function Empresas() {
   }
 
   return (
-    <ScrollView>
-      {empresas?.map(empresa => {
-        return (
-          <TouchableOpacity
-            key={empresa.id}
-            onPress={() => navigateToBusinessDetail(empresa)}>
-            <View style={styles.item}>
-              <View style={styles.itemImageContainer}>
-                <Image
-                  resizeMode="cover"
-                  resizeMethod="scale"
-                  style={styles.itemImage}
-                  source={{uri: backend.getImageURI(empresa.image)}}
-                />
+    <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}}>
+        {empresas?.map(empresa => {
+          console.log(empresa);
+          return (
+            <TouchableOpacity
+              key={empresa.id}
+              onPress={() => navigateToBusinessDetail(empresa)}>
+              <View style={styles.item}>
+                <View style={styles.itemImageContainer}>
+                  <Image
+                    resizeMode="cover"
+                    resizeMethod="scale"
+                    style={styles.itemImage}
+                    source={{uri: backend.getImageURI(empresa.image)}}
+                  />
+                </View>
+                <View>
+                  <Text>{empresa.name}</Text>
+                  <Text>
+                    {empresa.type_company} - {empresa.type_category}
+                  </Text>
+                  <Text>
+                    {empresa.phone} - {empresa.mobile}
+                  </Text>
+                </View>
               </View>
-              <Text>{empresa.name}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 }
 

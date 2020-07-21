@@ -44,10 +44,13 @@ const Cart = () => {
           <Text>No tienes ningun producto en tu carrito</Text>
         )}
       </ScrollView>
+      <View style={styles.totalCart}>
+        <Text>TOTAL: {cart.getTotal()}</Text>
+      </View>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => navigate('Confirmar')}>
           <View style={{...styles.button, marginTop: 15}}>
-            <Text>Confirmar Orden</Text>
+            <Text>Continuar</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleClean}>
@@ -79,6 +82,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 24,
+  },
+  totalCart: {
+    fontWeight: 'bold',
+    alignItems: 'center',
   },
   actions: {
     height: 150,
