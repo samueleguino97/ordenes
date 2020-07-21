@@ -4,6 +4,7 @@ import backend from '../config/backend';
 import {useRoute} from '@react-navigation/native';
 import cart from '../config/cart';
 import {useEmpresas} from '../context/empresas';
+import {Icon} from 'react-native-elements';
 
 const Product = ({navigation: {navigate}}) => {
   const {params: product} = useRoute();
@@ -35,13 +36,23 @@ const Product = ({navigation: {navigate}}) => {
           </View>
           <View>
             <TouchableOpacity onPress={() => setQuantity(before => before + 1)}>
-              <Text>U</Text>
+              <Image
+                style={{height: 25, width: 25}}
+                source={require('../assets/arrowicon.png')}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                setQuantity(before => (before > 0 ? before - 1 : before))
+                setQuantity(before => (before > 1 ? before - 1 : before))
               }>
-              <Text>D</Text>
+              <Image
+                style={{
+                  height: 25,
+                  width: 25,
+                  transform: [{rotate: '180deg'}],
+                }}
+                source={require('../assets/arrowicon.png')}
+              />
             </TouchableOpacity>
           </View>
         </View>
