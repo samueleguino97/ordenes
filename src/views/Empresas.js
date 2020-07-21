@@ -28,7 +28,6 @@ export default function Empresas() {
     <View style={{flex: 1}}>
       <ScrollView style={{flex: 1}}>
         {empresas?.map(empresa => {
-          console.log(empresa);
           return (
             <TouchableOpacity
               key={empresa.id}

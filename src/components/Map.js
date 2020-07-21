@@ -36,7 +36,6 @@ function Map({
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then(res => {
-      console.log(res);
       if (res === 'granted') {
         Geolocation.getCurrentPosition(info => {
           setDeviceLocation([info.coords.longitude, info.coords.latitude]);
@@ -61,11 +60,9 @@ function Map({
       setUserLocation(params.start);
       setLoading(false);
     } else {
-      console.log('sam');
       PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       ).then(res => {
-        console.log(res);
         if (res === 'granted') {
           Geolocation.getCurrentPosition(info => {
             setUserLocation([info.coords.longitude, info.coords.latitude]);
@@ -115,7 +112,6 @@ function Map({
   if (!userLocation) {
     return null;
   }
-  console.log('Start', userLocation);
   return (
     <>
       {loading && (
@@ -134,6 +130,9 @@ function Map({
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
+            onPress={({nativeEvent: {coordinate}}) =>
+              setUserLocation([coordinate.longitude, coordinate.latitude])
+            }
             style={styles.flex}>
             <Marker
               coordinate={{

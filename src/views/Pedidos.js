@@ -17,14 +17,12 @@ function Pedidos({navigation}) {
   const [ordenes, setOrdenes] = useState([]);
 
   const {user} = useAuth();
-  console.log(user);
   useEffect(() => {
     get('get_orders').then(result => {
       setOrdenes(result);
     });
   }, []);
 
-  console.log(ordenes.map(orden => orden.state));
   return (
     <>
       <SafeAreaView style={styles.container}>

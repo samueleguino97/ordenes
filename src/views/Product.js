@@ -3,13 +3,16 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import backend from '../config/backend';
 import {useRoute} from '@react-navigation/native';
 import cart from '../config/cart';
+import {useEmpresas} from '../context/empresas';
 
 const Product = ({navigation: {navigate}}) => {
   const {params: product} = useRoute();
   const [quantity, setQuantity] = useState(1);
+  const [empresas] = useEmpresas();
+  const empresa = empresas.filter(item => item.id === product.company_id);
 
   function navigateToExtras() {}
-
+  console.log(empresa);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -19,6 +22,9 @@ const Product = ({navigation: {navigate}}) => {
         />
       </View>
       <View>
+        <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
+          {product.name}
+        </Text>
         <Text style={{textAlign: 'center'}}>{product.description}</Text>
       </View>
       <View style={styles.information}>
@@ -31,7 +37,10 @@ const Product = ({navigation: {navigate}}) => {
             <TouchableOpacity onPress={() => setQuantity(before => before + 1)}>
               <Text>U</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setQuantity(before => before - 1)}>
+            <TouchableOpacity
+              onPress={() =>
+                setQuantity(before => (before > 0 ? before - 1 : before))
+              }>
               <Text>D</Text>
             </TouchableOpacity>
           </View>

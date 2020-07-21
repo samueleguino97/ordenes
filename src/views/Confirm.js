@@ -29,7 +29,6 @@ const Confirm = ({navigation}) => {
   useEffect(() => {
     async function getLocation() {
       if (params) {
-        console.log(params);
         setStartingLocation(params.location);
       } else {
         setStartingLocation(await getUserLocation());
@@ -58,10 +57,11 @@ const Confirm = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.containerTextInput}>
         <View>
-          <TextInput placeholder="Nombre" style={styles.textInput} />
-        </View>
-        <View>
-          <TextInput placeholder="Email" style={styles?.textInput} />
+          <TextInput
+            placeholder="Descripcion"
+            multiline={true}
+            style={styles.textInput}
+          />
         </View>
       </View>
       <View style={styles.containerMap}>
@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    textAlignVertical: 'top',
     backgroundColor: 'white',
-    height: 60,
+    height: 120,
     width: '100%',
     borderStyle: 'solid',
     borderColor: 'black',

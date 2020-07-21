@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Providers from './src/Providers';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -21,7 +21,7 @@ import Pedido from './src/views/Pedido';
 import Geolocation from '@react-native-community/geolocation';
 import Map from './src/components/Map';
 import Success from './src/views/Success';
-import {ScrollView} from 'react-native';
+import {ScrollView, PermissionsAndroid} from 'react-native';
 
 Geolocation.setRNConfiguration({
   enableHighAccuracy: false,
@@ -35,6 +35,16 @@ const center = {headerTitleAlign: 'center'};
 const MainStack = createStackNavigator();
 
 function Main() {
+  useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    ).then(res => {
+      if (res === 'granted') {
+        // Geolocation.getCurrentPosition(info => console.log(info));
+      }
+    });
+  }, []);
+
   return (
     <Providers>
       <NavigationContainer>

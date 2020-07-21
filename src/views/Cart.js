@@ -25,8 +25,6 @@ const Cart = () => {
     setCartItems([]);
   }
 
-  console.log(cartItems);
-
   return (
     <View style={{flex: 1}}>
       <ScrollView contentContainerStyle={styles.container}>

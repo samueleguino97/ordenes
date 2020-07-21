@@ -22,7 +22,6 @@ function Pedido() {
   function handleTake() {
     post('change_state', {status: 'en camino', order_id: orden.id});
   }
-  console.log(currentOrder.longitude);
   return (
     <View>
       <View style={styles.infoContainer}>

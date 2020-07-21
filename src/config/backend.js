@@ -15,7 +15,6 @@ class Backend {
   }
 
   async request(endpoint = '', method = '', data = {}) {
-    console.log('REQUESTING');
     let requestUrl = `${this.backendUrl}/${endpoint}`;
     let headers = {};
 
@@ -42,10 +41,8 @@ class Backend {
       options.headers = headers;
       options.method = method;
     }
-    console.log('STARTING REQUEST');
     const requestResult = await fetch(requestUrl, options);
 
-    console.log('FINISHED REQUEST');
     if (requestResult.status !== 404) {
       let error = new Error();
 
@@ -53,7 +50,6 @@ class Backend {
     }
 
     let resultContent = await requestResult.json();
-    console.log(resultContent);
     return resultContent;
   }
 
