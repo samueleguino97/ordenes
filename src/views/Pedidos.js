@@ -23,6 +23,16 @@ function Pedidos({navigation}) {
     });
   }, []);
 
+  function filterOrdenes() {
+    return ordenes.filter(item =>
+      activeButton === 0
+        ? true
+        : (item.mobility === 'Auto' && activeButton === 1) ||
+          ((item.mobility === 'Moto' || item.mobility === 'Bicicleta') &&
+            activeButton === 2),
+    );
+  }
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -67,7 +77,7 @@ function Pedidos({navigation}) {
           </TouchableOpacity>
         </View>
         <ScrollView contentContainerStyle={styles.containerResults}>
-          {ordenes
+          {filterOrdenes()
             ?.filter(orden => orden.state === 'En espera')
             .map((orden, index) => (
               <TouchableOpacity
