@@ -39,7 +39,7 @@ export function useAuth() {
     const userResult = await login(email, password);
 
     const retrievedUser = new User(userResult);
-
+    console.log(retrievedUser);
     backend.setAccessToken(retrievedUser.access_token);
     await AsyncStorage.setItem('access_token', retrievedUser.access_token);
     await AsyncStorage.setItem('user', JSON.stringify(userResult));
@@ -48,6 +48,7 @@ export function useAuth() {
   }
 
   async function handleLogout() {
+    console.log('LOGGIN OUT');
     await logout();
     await AsyncStorage.removeItem('access_token');
     authContext.setUser(null);

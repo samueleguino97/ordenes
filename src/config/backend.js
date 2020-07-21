@@ -41,8 +41,9 @@ class Backend {
       options.headers = headers;
       options.method = method;
     }
+    console.log(requestUrl, options);
     const requestResult = await fetch(requestUrl, options);
-
+    console.log(requestResult);
     if (requestResult.status !== 404) {
       let error = new Error();
 

@@ -7,15 +7,17 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import {useAuth} from '../context/auth';
 import useFormState from '../hooks/useFormState';
 import backend from '../config/backend';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 
 const Profile = () => {
   const {user, logout} = useAuth();
-  console.log(user);
   const [profileForm, setProfileField] = useFormState(user);
+  const {dispatch} = useNavigation();
 
   async function updateUser() {
     const result = await backend.request('edit_client', 'POST', {
@@ -25,7 +27,14 @@ const Profile = () => {
       email: profileForm.email,
       dni: 123456789,
     });
-    console.log(result);
+    ToastAndroid.show('Se han actualizado tus datos', ToastAndroid.LONG);
+  }
+  async function resetPass() {
+    const result = await backend.request('recovery_password', 'POST');
+    ToastAndroid.show(
+      'Se te ha enviado un correo con tu nueva contraseña',
+      ToastAndroid.LONG,
+    );
   }
 
   return (
@@ -86,14 +95,26 @@ const Profile = () => {
             <Text style={styles.textButton}>ACTUALIZAR</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.changePasswordButton}>
+        <TouchableOpacity
+          onPress={resetPass}
+          style={styles.changePasswordButton}>
           <View style={styles.button}>
             <Text style={styles.textButton}>Cambiar Password</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={styles.button}>
-            <Text style={styles.textButton} onPress={logout}>
+            <Text
+              style={styles.textButton}
+              onPress={async () => {
+                await logout();
+                dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'Login'}],
+                  }),
+                );
+              }}>
               Logout
             </Text>
           </View>
