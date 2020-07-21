@@ -18,7 +18,7 @@ import {getUserLocation} from '../config/utils';
 import Modal from 'react-native-modal';
 import Success from './Success';
 
-const Confirm = ({navigation}) => {
+const PedidosGusto = ({navigation}) => {
   const {user} = useAuth();
   const {params} = useRoute();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -26,13 +26,20 @@ const Confirm = ({navigation}) => {
   const [vehicle, setVehicle] = useState(1);
 
   const [startingLocation, setStartingLocation] = useState(null);
+  const [PedidosLocation, setPedidosLocation] = useState(null);
 
   useEffect(() => {
     async function getLocation() {
       if (params) {
-        setStartingLocation(params.location);
+        console.log(params.id);
+        if (params.id === 'pedido') {
+          setPedidosLocation(params.location);
+        } else {
+          setStartingLocation(params.location);
+        }
       } else {
         setStartingLocation(await getUserLocation());
+        setPedidosLocation(await getUserLocation());
       }
     }
     getLocation();
@@ -65,8 +72,23 @@ const Confirm = ({navigation}) => {
           />
         </View>
       </View>
+      <Text>De donde recoger</Text>
       <View style={styles.containerMap}>
-        <Map startLocation={startingLocation} mutable />
+        <Map
+          id="pedido"
+          backTo="PedidosGusto"
+          startLocation={PedidosLocation}
+          mutable
+        />
+      </View>
+      <Text>A donde llevar</Text>
+      <View style={styles.containerMap}>
+        <Map
+          id="destino"
+          backTo="PedidosGusto"
+          startLocation={startingLocation}
+          mutable
+        />
       </View>
       <View style={styles.containerMovilOptions}>
         <TouchableOpacity onPress={() => setVehicle(vehicle === 1 ? 2 : 1)}>
@@ -102,7 +124,7 @@ const Confirm = ({navigation}) => {
   );
 };
 
-export default Confirm;
+export default PedidosGusto;
 
 const styles = StyleSheet.create({
   container: {

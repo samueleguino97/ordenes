@@ -22,6 +22,8 @@ function Map({
   destinationLocation,
   mutable,
   fullDestination,
+  id,
+  backTo,
 }) {
   let [userLocation, setUserLocation] = useState(null);
   let [destination, setDestination] = useState(null);
@@ -104,6 +106,8 @@ function Map({
           destination: fullDestination ? userLocation : destinationLocation,
           mutable: mutable,
           start: fullDestination ? deviceLocation : userLocation,
+          backTo: backTo,
+          id,
         })
       }
     />
@@ -183,7 +187,12 @@ function Map({
           {!navigation && renderActions()}
           {params && params.mutable && (
             <TouchableOpacity
-              onPress={() => navigate('Confirmar', {location: userLocation})}>
+              onPress={() =>
+                navigate(params.backTo || 'Confirmar', {
+                  location: userLocation,
+                  id: params.id,
+                })
+              }>
               <View style={styles.select}>
                 <Text>Seleccionar</Text>
               </View>

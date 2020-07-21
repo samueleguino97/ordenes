@@ -55,6 +55,17 @@ export default function Empresas() {
           );
         })}
       </ScrollView>
+      <TouchableOpacity onPress={() => navigate('PedidosGusto')}>
+        <View
+          style={{
+            height: 50,
+            backgroundColor: 'lightgray',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text>Pedidos Gusto</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
