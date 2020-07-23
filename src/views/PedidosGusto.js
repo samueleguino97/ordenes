@@ -17,6 +17,8 @@ import {useRoute} from '@react-navigation/native';
 import {getUserLocation} from '../config/utils';
 import Modal from 'react-native-modal';
 import Success from './Success';
+import {getPreciseDistance} from 'geolib';
+import useFormState from '../hooks/useFormState';
 
 const PedidosGusto = ({navigation}) => {
   const {user} = useAuth();
@@ -24,9 +26,18 @@ const PedidosGusto = ({navigation}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [vehicle, setVehicle] = useState(1);
+  const [confirmForm, setConfirmField] = useFormState();
 
   const [startingLocation, setStartingLocation] = useState(null);
   const [PedidosLocation, setPedidosLocation] = useState(null);
+
+  function distance(coordsStart, coordsEnd) {
+    const result = getPreciseDistance(
+      {latitude: coordsStart[1], longitude: coordsStart[0]},
+      {latitude: coordsEnd[1], longitude: coordsEnd[1]},
+    );
+    return result;
+  }
 
   useEffect(() => {
     async function getLocation() {
@@ -48,16 +59,20 @@ const PedidosGusto = ({navigation}) => {
   const {post} = useBackendRequests();
 
   async function handleOrder() {
-    await post('set_order', {
+    await post('set_pleasure', {
+      title: confirmForm.title,
       total: cart.getTotal(),
-      lng: startingLocation[0],
-      lat: startingLocation[1],
+      lng1: startingLocation[0],
+      lat1: startingLocation[1],
+      lng2: PedidosLocation[0],
+      lat2: PedidosLocation[1],
+      distance: distance(startingLocation, PedidosLocation) / 1000,
       mobility_id: vehicle,
-      description: 'detalle de la orden',
-      products_name: (await cart.getItems()).map(item => item.name),
-      products_quantity: (await cart.getItems()).map(item => item.quantity),
+      description: confirmForm.description,
+      address: confirmForm.address,
+      celular_from: confirmForm.celular_from,
+      celular_to: confirmForm.celular_to,
     });
-    await cart.cleanCart();
     setModalIsOpen(true);
   }
 
@@ -66,9 +81,43 @@ const PedidosGusto = ({navigation}) => {
       <View style={styles.containerTextInput}>
         <View>
           <TextInput
+            placeholder="Titulo"
+            style={styles.textInputSmall}
+            value={confirmForm.title}
+            onChangeText={setConfirmField('title')}
+          />
+        </View>
+      </View>
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
             placeholder="Descripcion"
             multiline={true}
             style={styles.textInput}
+            value={confirmForm.description}
+            onChangeText={setConfirmField('description')}
+          />
+        </View>
+      </View>
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
+            placeholder="Su Telefono"
+            style={styles.textInputSmall}
+            keyboardType="numeric"
+            value={confirmForm.celular_to}
+            onChangeText={setConfirmField('celular_to')}
+          />
+        </View>
+      </View>
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
+            placeholder="Telefono del Lugar"
+            style={styles.textInputSmall}
+            keyboardType="numeric"
+            value={confirmForm.celular_from}
+            onChangeText={setConfirmField('celular_from')}
           />
         </View>
       </View>
@@ -139,6 +188,21 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     backgroundColor: 'white',
     height: 120,
+    width: '100%',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  textInputSmall: {
+    marginVertical: 5,
+    paddingLeft: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'top',
+    backgroundColor: 'white',
+    height: 50,
     width: '100%',
     borderStyle: 'solid',
     borderColor: 'black',

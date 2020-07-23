@@ -17,13 +17,15 @@ import {useRoute} from '@react-navigation/native';
 import {getUserLocation} from '../config/utils';
 import Modal from 'react-native-modal';
 import Success from './Success';
+import useFormState from '../hooks/useFormState';
 
 const Confirm = ({navigation}) => {
   const {user} = useAuth();
   const {params} = useRoute();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [vehicle, setVehicle] = useState(1);
+  const [vehicle, setVehicle] = useState(3);
+  const [confirmForm, setConfirmField] = useFormState();
 
   const [startingLocation, setStartingLocation] = useState(null);
 
@@ -45,8 +47,10 @@ const Confirm = ({navigation}) => {
       total: cart.getTotal(),
       lng: startingLocation[0],
       lat: startingLocation[1],
+      address: confirmForm.address,
+      title: confirmForm.title,
       mobility_id: vehicle,
-      description: 'detalle de la orden',
+      description: confirmForm.description,
       products_name: (await cart.getItems()).map(item => item.name),
       products_quantity: (await cart.getItems()).map(item => item.quantity),
     });
@@ -59,9 +63,34 @@ const Confirm = ({navigation}) => {
       <View style={styles.containerTextInput}>
         <View>
           <TextInput
+            placeholder="Titulo"
+            multiline={true}
+            style={styles.textInputSmall}
+            onChangeText={setConfirmField('title')}
+            value={confirmForm.title}
+          />
+        </View>
+      </View>
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
             placeholder="Descripcion"
             multiline={true}
             style={styles.textInput}
+            onChangeText={setConfirmField('description')}
+            value={confirmForm.description}
+          />
+        </View>
+      </View>
+
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
+            placeholder="Direccion"
+            multiline={true}
+            style={styles.textInputSmall}
+            onChangeText={setConfirmField('address')}
+            value={confirmForm.address}
           />
         </View>
       </View>
@@ -69,10 +98,15 @@ const Confirm = ({navigation}) => {
         <Map startLocation={startingLocation} mutable />
       </View>
       <View style={styles.containerMovilOptions}>
-        <TouchableOpacity onPress={() => setVehicle(vehicle === 1 ? 2 : 1)}>
-          <View style={{alignItems: 'center'}}>
-            <RadioButton selected={vehicle === 2} />
-            <Text style={styles.movilOptions}>Automovil</Text>
+        <TouchableOpacity onPress={() => setVehicle(vehicle === 3 ? 1 : 3)}>
+          <View style={{flexDirection: 'row'}}>
+            <RadioButton selected={vehicle === 1} />
+            <View>
+              <Text style={styles.movilOptions}>Automovil</Text>
+              <Text style={styles.movilOptions}>
+                Elija en caso de que su pedido sea grande o delicado{' '}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -86,7 +120,7 @@ const Confirm = ({navigation}) => {
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL:</Text>
-            <Text style={styles.price}> Bs {cart.getTotal() + 15}</Text>
+            <Text style={styles.price}> Bs {cart.getTotal()}</Text>
           </View>
         </View>
       </View>
@@ -117,6 +151,22 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     backgroundColor: 'white',
     height: 120,
+    width: '100%',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+
+  textInputSmall: {
+    marginVertical: 5,
+    paddingLeft: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'top',
+    backgroundColor: 'white',
+    height: 45,
     width: '100%',
     borderStyle: 'solid',
     borderColor: 'black',

@@ -26,6 +26,9 @@ export function useAuth() {
 
   async function handleRegister(userData) {
     const userResult = await post('register', userData);
+    if (userResult.errors) {
+      return userResult;
+    }
     const retrievedUser = new User(userResult);
 
     backend.setAccessToken(retrievedUser.access_token);
@@ -37,9 +40,10 @@ export function useAuth() {
 
   async function handleLogin(email, password) {
     const userResult = await login(email, password);
-
+    if (userResult.errors) {
+      return userResult;
+    }
     const retrievedUser = new User(userResult);
-    console.log(retrievedUser);
     backend.setAccessToken(retrievedUser.access_token);
     await AsyncStorage.setItem('access_token', retrievedUser.access_token);
     await AsyncStorage.setItem('user', JSON.stringify(userResult));

@@ -1,13 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import Map from '../components/Map';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 import useBackendRequests from '../hooks/useBackend';
 
 function Pedido() {
   const {params} = useRoute();
+  const {navigate} = useNavigation();
 
   const {post} = useBackendRequests();
+  const [pleasureOrder, setPleasureOrder] = useState();
 
   const orden = params?.pedido;
 
@@ -17,13 +25,18 @@ function Pedido() {
     post('get_order', {order_id: orden.id}).then(result => {
       setCurrentOrder(result[0]);
     });
+
+    if (!!orden.pleasure) {
+      setPleasureOrder(orden);
+    }
   }, []);
 
   function handleTake() {
-    post('change_state', {status: 'en camino', order_id: orden.id});
+    post('change_state', {status: 'en proceso', order_id: currentOrder.id});
   }
+  console.log(currentOrder);
   return (
-    <View>
+    <ScrollView>
       <View style={styles.infoContainer}>
         <Text style={styles.lightText}>
           Nombre:
@@ -36,13 +49,53 @@ function Pedido() {
           Email:
           <Text style={styles.boldText}>{currentOrder?.user_id?.email}</Text>
         </Text>
+        <Text style={styles.lightText}>
+          Telefono:
+          <Text style={styles.boldText}>{currentOrder?.user_id?.phone}</Text>
+        </Text>
+        <Text style={styles.lightText}>
+          Celular:
+          <Text style={styles.boldText}>{currentOrder?.user_id?.mobile}</Text>
+        </Text>
       </View>
-      <View style={styles.total}>
-        <Text>TOTAL PEDIDO:</Text>
-        <Text>Bs. {orden.total}</Text>
-      </View>
-      <View style={styles.map}>
-        {!!currentOrder.longitude && (
+      <TouchableOpacity
+        onPress={() =>
+          navigate('PedidoProducts', {
+            orderDetail: currentOrder.order_detail,
+            pleasure: !!pleasureOrder,
+          })
+        }>
+        <View style={styles.total}>
+          <Text>TOTAL PEDIDO:</Text>
+          <Text>Bs. {orden.total}</Text>
+        </View>
+      </TouchableOpacity>
+      {!!pleasureOrder?.longitude_start && (
+        <>
+          <Text>Recoger de</Text>
+          <View style={styles.map}>
+            <Map
+              startLocation={[
+                parseFloat(pleasureOrder.longitude_start),
+                parseFloat(pleasureOrder.latitude_start),
+              ]}
+              fullDestination
+            />
+          </View>
+          <Text>Llevar a</Text>
+          <View style={styles.map}>
+            <Map
+              startLocation={[
+                parseFloat(pleasureOrder.longitude_end),
+                parseFloat(pleasureOrder.latitude_end),
+              ]}
+              fullDestination
+            />
+          </View>
+        </>
+      )}
+      {!!currentOrder.longitude && !pleasureOrder && (
+        <View style={styles.map}>
           <Map
             startLocation={[
               parseFloat(currentOrder.longitude),
@@ -50,8 +103,8 @@ function Pedido() {
             ]}
             fullDestination
           />
-        )}
-      </View>
+        </View>
+      )}
       <View style={styles.total}>
         <Text>TOTAL:</Text>
         <Text>Bs. {orden.total}</Text>
@@ -61,7 +114,7 @@ function Pedido() {
           <Text>Tomar Pedido</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 

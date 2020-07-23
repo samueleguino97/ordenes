@@ -23,6 +23,7 @@ import Map from './src/components/Map';
 import Success from './src/views/Success';
 import {ScrollView, PermissionsAndroid} from 'react-native';
 import PedidosGusto from './src/views/PedidosGusto';
+import PedidoProducts from './src/views/PedidoProducts';
 
 Geolocation.setRNConfiguration({
   enableHighAccuracy: false,
@@ -74,6 +75,11 @@ function Main() {
             name="PedidosGusto"
             component={PedidosGusto}
             options={{title: 'Pedidos Gusto'}}
+          />
+          <MainStack.Screen
+            name="PedidoProducts"
+            component={PedidoProducts}
+            options={{title: 'Productos'}}
           />
           <MainStack.Screen
             name="Success"

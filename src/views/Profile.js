@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,12 +13,40 @@ import {useAuth} from '../context/auth';
 import useFormState from '../hooks/useFormState';
 import backend from '../config/backend';
 import {useNavigation, CommonActions} from '@react-navigation/native';
-
+import ImagePicker from 'react-native-image-picker';
+import {Image} from 'react-native-elements';
+import ChangePassword from './ChangePassword';
+import Modal from 'react-native-modal';
 const Profile = () => {
   const {user, logout} = useAuth();
   const [profileForm, setProfileField] = useFormState(user);
+  const [imageToUpload, setImageToUpload] = useState();
   const {dispatch} = useNavigation();
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function updateImage() {
+    ImagePicker.showImagePicker(
+      {
+        title: 'Selecciona tu foto de perfil',
+      },
+      response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+          setProfileField('image')(response.uri);
+          setImageToUpload(response.data);
+        }
+      },
+    );
+  }
   async function updateUser() {
     const result = await backend.request('edit_client', 'POST', {
       username: profileForm.username,
@@ -26,6 +54,7 @@ const Profile = () => {
       last_name: profileForm.last_name,
       email: profileForm.email,
       dni: 123456789,
+      image: imageToUpload ? imageToUpload : profileForm.image,
     });
     ToastAndroid.show('Se han actualizado tus datos', ToastAndroid.LONG);
   }
@@ -40,6 +69,20 @@ const Profile = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.containerTextInputs}>
+        <TouchableOpacity onPress={updateImage}>
+          <View
+            style={{
+              width: '100%',
+              height: 100,
+              justifyContent: 'center',
+              flexDirection: 'row',
+            }}>
+            <Image
+              source={{uri: profileForm.image}}
+              style={{height: 80, width: 80}}
+            />
+          </View>
+        </TouchableOpacity>
         <View>
           <TextInput
             value={profileForm.first_name}
@@ -96,7 +139,7 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={resetPass}
+          onPress={() => setModalIsOpen(true)}
           style={styles.changePasswordButton}>
           <View style={styles.button}>
             <Text style={styles.textButton}>Cambiar Password</Text>
@@ -120,6 +163,11 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <Modal
+        onBackButtonPress={() => setModalIsOpen(false)}
+        isVisible={modalIsOpen}>
+        <ChangePassword onClose={() => setModalIsOpen(false)} />
+      </Modal>
     </ScrollView>
   );
 };

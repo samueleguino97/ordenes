@@ -15,15 +15,22 @@ function Pedidos({navigation}) {
   const {get} = useBackendRequests();
 
   const [ordenes, setOrdenes] = useState([]);
+  const [pleasures, setPleasures] = useState([]);
 
   const {user} = useAuth();
   useEffect(() => {
     get('get_orders').then(result => {
       setOrdenes(result);
     });
+    get('get_pleasure').then(result => {
+      setPleasures(result);
+    });
   }, []);
-
   function filterOrdenes() {
+    if (activeButton === 3) {
+      return pleasures.map(pleasure => ({...pleasure, pleasure: true}));
+    }
+
     return ordenes.filter(item =>
       activeButton === 0
         ? true
@@ -32,7 +39,6 @@ function Pedidos({navigation}) {
             activeButton === 2),
     );
   }
-
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -76,29 +82,48 @@ function Pedidos({navigation}) {
             </View>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity onPress={() => setActiveButton(3)}>
+          <View
+            style={{
+              ...styles.button,
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+              backgroundColor: activeButton === 3 ? 'gray' : 'lightgray',
+              justifyContent: 'center',
+              width: '100%',
+            }}>
+            <Text style={activeButton === 3 ? styles.textButton : {}}>
+              Pedidos Gusto
+            </Text>
+          </View>
+        </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.containerResults}>
-          {filterOrdenes()
-            ?.filter(orden => orden.state === 'En espera')
-            .map((orden, index) => (
-              <TouchableOpacity
-                key={orden.id}
-                onPress={() => navigation.navigate('Pedido', {pedido: orden})}>
-                <View
-                  style={{
-                    ...styles.itemResult,
-                    backgroundColor:
-                      index % 2 === 0 ? 'transparent' : 'lightgray',
-                  }}>
-                  <View style={styles.itemInfo}>
-                    <Text style={styles.result1}>{orden.mobility}</Text>
-                    <Text style={styles.result1}>Av. Cala Cala #45</Text>
-                  </View>
-                  <View>
-                    <Text>Bs. {orden.total}</Text>
-                  </View>
+          {filterOrdenes()?.map((orden, index) => (
+            <TouchableOpacity
+              key={orden.id}
+              disabled={
+                orden.state === 'enviado' ||
+                orden.state === 'rechazado' ||
+                orden.state === 'en camino'
+              }
+              onPress={() => navigation.navigate('Pedido', {pedido: orden})}>
+              <View
+                style={{
+                  ...styles.itemResult,
+                  backgroundColor:
+                    index % 2 === 0 ? 'transparent' : 'lightgray',
+                }}>
+                <View style={styles.itemInfo}>
+                  <Text style={styles.result1}>{orden.mobility}</Text>
+                  <Text style={styles.result1}>{orden.address}</Text>
+                  <Text style={styles.result1}>{orden.state}</Text>
                 </View>
-              </TouchableOpacity>
-            ))}
+                <View>
+                  <Text>Bs. {orden.total}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </SafeAreaView>
     </>
@@ -109,6 +134,9 @@ export default Pedidos;
 
 const styles = StyleSheet.create({
   container: {},
+  result1: {
+    flex: 1,
+  },
 
   containerButtons: {
     marginTop: 10,
@@ -140,7 +168,7 @@ const styles = StyleSheet.create({
   },
   itemInfo: {
     flexDirection: 'row',
-    width: 180,
+    flex: 1,
     justifyContent: 'space-between',
   },
 

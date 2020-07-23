@@ -12,9 +12,17 @@ export default function Login({navigation}) {
   });
   const {login} = useAuth();
 
+  const [errors, setErrors] = useState([]);
+
   async function handleLogin() {
     try {
       const user = await login(userCredentials.email, userCredentials.password);
+
+      if (user.errors) {
+        setErrors(Object.entries(user.errors));
+        return;
+      }
+
       if (user.user_role === 'Employed') {
         navigation.dispatch(
           CommonActions.reset({
@@ -46,6 +54,12 @@ export default function Login({navigation}) {
           <Image style={styles.image} source={require('../assets/Logo.jpeg')} />
         </View>
         <View style={styles.inputs}>
+          {errors?.map(
+            error =>
+              !console.log(error) && (
+                <Text style={styles.error}>{error[1][0]}</Text>
+              ),
+          )}
           <View style={styles.textInput}>
             <TextInput
               style={{width: '100%'}}
@@ -86,6 +100,9 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
   container: {
     padding: 24,
+  },
+  error: {
+    color: 'red',
   },
   img: {
     flexDirection: 'row',
