@@ -6,12 +6,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {useAuth} from '../context/auth';
 import useBackendRequests from '../hooks/useBackend';
 
 function Pedidos({navigation}) {
   const [activeButton, setActiveButton] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   const {get} = useBackendRequests();
 
   const [ordenes, setOrdenes] = useState([]);
@@ -39,6 +41,19 @@ function Pedidos({navigation}) {
             activeButton === 2),
     );
   }
+
+  function onRefresh() {
+    setRefreshing(true);
+    get('get_orders').then(result => {
+      setOrdenes(result);
+      setRefreshing(false);
+    });
+    get('get_pleasure').then(result => {
+      setPleasures(result);
+      setRefreshing(false);
+    });
+  }
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -97,7 +112,11 @@ function Pedidos({navigation}) {
             </Text>
           </View>
         </TouchableOpacity>
-        <ScrollView contentContainerStyle={styles.containerResults}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          contentContainerStyle={styles.containerResults}>
           {filterOrdenes()?.map((orden, index) => (
             <TouchableOpacity
               key={orden.id}

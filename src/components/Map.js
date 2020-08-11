@@ -182,6 +182,7 @@ function Map({
                   longitudeDelta: 0.0421,
                 }}
                 image={require('../assets/locationmarker.png')}
+                style={{height: 8}}
               />
             )}
           </MapView>
