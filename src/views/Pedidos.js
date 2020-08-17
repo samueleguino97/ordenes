@@ -138,7 +138,7 @@ function Pedidos({navigation}) {
                   <Text style={styles.result1}>{orden.state}</Text>
                 </View>
                 <View>
-                  <Text>Bs. {orden.total}</Text>
+                  <Text>Bs. {orden.total.toFixed(2)}</Text>
                 </View>
               </View>
             </TouchableOpacity>

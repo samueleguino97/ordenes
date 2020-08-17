@@ -67,7 +67,7 @@ function Pedido() {
         }>
         <View style={styles.total}>
           <Text>TOTAL PEDIDO:</Text>
-          <Text>Bs. {orden.total}</Text>
+          <Text>Bs. {orden.total.toFixed(2)}</Text>
         </View>
       </TouchableOpacity>
       {!!pleasureOrder?.longitude_start && (
@@ -107,7 +107,7 @@ function Pedido() {
       )}
       <View style={styles.total}>
         <Text>TOTAL:</Text>
-        <Text>Bs. {orden.total}</Text>
+        <Text>Bs. {orden.total.toFixed(2)}</Text>
       </View>
       <TouchableOpacity onPress={handleTake}>
         <View style={styles.take}>
