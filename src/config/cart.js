@@ -15,6 +15,10 @@ class Cart {
   }
 
   getTotal() {
+    if (!this.items || !this.items.length) {
+      return 0;
+    }
+
     return this.items
       .map(item => item.price * item.quantity)
       .reduce((total, next) => (next ? total + next : total), 0);

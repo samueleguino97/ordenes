@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useAuth} from '../context/auth';
 import cart from '../config/cart';
 import RadioButton from '../components/RadioButton';
 import Map from '../components/Map';
@@ -21,7 +20,6 @@ import {getPreciseDistance} from 'geolib';
 import useFormState from '../hooks/useFormState';
 
 const PedidosGusto = ({navigation}) => {
-  const {user} = useAuth();
   const {params} = useRoute();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -42,7 +40,6 @@ const PedidosGusto = ({navigation}) => {
   useEffect(() => {
     async function getLocation() {
       if (params) {
-        console.log(params.id);
         if (params.id === 'pedido') {
           setPedidosLocation(params.location);
         } else {
@@ -151,20 +148,20 @@ const PedidosGusto = ({navigation}) => {
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL PEDIDO:</Text>
-            <Text style={styles.price}> Bs {+cart.getTotal().toFixed(2)}</Text>
+            <Text style={styles.price}>
+              {' '}
+              Bs {parseFloat(cart.getTotal()).toFixed(2)}
+            </Text>
           </View>
         </View>
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>Costo Distancia:</Text>
             <Text style={styles.price}>
-              {' '}
-              Bs{' '}
+              Bs
               {!!startingLocation && !!PedidosLocation
-                ? (
-                    distance(startingLocation, PedidosLocation) /
-                    1000 /
-                    100
+                ? parseFloat(
+                    distance(startingLocation, PedidosLocation) / 1000 / 100,
                   ).toFixed(2)
                 : 'Inserte ubicaciones'}
             </Text>
@@ -174,7 +171,10 @@ const PedidosGusto = ({navigation}) => {
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL:</Text>
-            <Text style={styles.price}> Bs {+cart.getTotal().toFixed(2)}</Text>
+            <Text style={styles.price}>
+              {' '}
+              Bs {parseFloat(cart.getTotal()).toFixed(2)}
+            </Text>
           </View>
         </View>
       </View>
