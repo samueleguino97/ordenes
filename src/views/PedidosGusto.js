@@ -151,7 +151,7 @@ const PedidosGusto = ({navigation}) => {
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL PEDIDO:</Text>
-            <Text style={styles.price}> Bs {cart.getTotal()}</Text>
+            <Text style={styles.price}> Bs {+cart.getTotal().toFixed(2)}</Text>
           </View>
         </View>
         <View style={styles.containerTotalPrice}>
@@ -161,7 +161,11 @@ const PedidosGusto = ({navigation}) => {
               {' '}
               Bs{' '}
               {!!startingLocation && !!PedidosLocation
-                ? distance(startingLocation, PedidosLocation) / 1000 / 100
+                ? (
+                    distance(startingLocation, PedidosLocation) /
+                    1000 /
+                    100
+                  ).toFixed(2)
                 : 'Inserte ubicaciones'}
             </Text>
           </View>
@@ -170,7 +174,7 @@ const PedidosGusto = ({navigation}) => {
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
             <Text>TOTAL:</Text>
-            <Text style={styles.price}> Bs {cart.getTotal()}</Text>
+            <Text style={styles.price}> Bs {+cart.getTotal().toFixed(2)}</Text>
           </View>
         </View>
       </View>

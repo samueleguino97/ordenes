@@ -29,10 +29,15 @@ function Pedido() {
     if (!!orden.pleasure) {
       setPleasureOrder(orden);
     }
-  }, []);
+  }, [orden.id]);
 
   function handleTake() {
-    post('change_state', {status: 'en proceso', order_id: currentOrder.id});
+    post('change_state', {
+      status: 'en proceso',
+      order_id: currentOrder.id,
+    }).then(() => {
+      setCurrentOrder({...currentOrder, state: 'en proceso'});
+    });
   }
   console.log(currentOrder);
   return (
