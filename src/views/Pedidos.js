@@ -27,7 +27,7 @@ function Pedidos({navigation}) {
     get('get_pleasure').then(result => {
       setPleasures(result);
     });
-  }, []);
+  }, [navigation]);
   function filterOrdenes() {
     if (activeButton === 3) {
       return pleasures.map(pleasure => ({...pleasure, pleasure: true}));

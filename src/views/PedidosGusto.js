@@ -25,7 +25,7 @@ const PedidosGusto = ({navigation}) => {
   const {params} = useRoute();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [vehicle, setVehicle] = useState(1);
+  const [vehicle, setVehicle] = useState(3);
   const [confirmForm, setConfirmField] = useFormState();
 
   const [startingLocation, setStartingLocation] = useState(null);
@@ -140,9 +140,9 @@ const PedidosGusto = ({navigation}) => {
         />
       </View>
       <View style={styles.containerMovilOptions}>
-        <TouchableOpacity onPress={() => setVehicle(vehicle === 1 ? 2 : 1)}>
+        <TouchableOpacity onPress={() => setVehicle(vehicle === 3 ? 1 : 3)}>
           <View style={{alignItems: 'center'}}>
-            <RadioButton selected={vehicle === 2} />
+            <RadioButton selected={vehicle === 1} />
             <Text style={styles.movilOptions}>Automovil</Text>
           </View>
         </TouchableOpacity>

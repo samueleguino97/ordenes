@@ -53,7 +53,7 @@ const Profile = () => {
       first_name: profileForm.first_name,
       last_name: profileForm.last_name,
       email: profileForm.email,
-      dni: 123456789,
+      dni: 1,
       image: imageToUpload ? imageToUpload : profileForm.image,
     });
     ToastAndroid.show('Se han actualizado tus datos', ToastAndroid.LONG);
