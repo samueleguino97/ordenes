@@ -132,6 +132,11 @@ function Main() {
             }}
           />
           <MainStack.Screen
+            name="OpinionEmpresa"
+            component={Empresa}
+            options={{title: 'Opiniones'}}
+          />
+          <MainStack.Screen
             name="Empresa"
             component={Empresa}
             options={{title: 'Productos'}}
