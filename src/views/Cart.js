@@ -33,6 +33,7 @@ const Cart = () => {
             <Image style={styles.image} />
             <View>
               <Text>{item.name}</Text>
+              <Text>{item.description}</Text>
               <Text>{item.quantity}</Text>
               <Text>{item.price * item.quantity}</Text>
             </View>

@@ -32,7 +32,7 @@ const PedidosGusto = ({navigation}) => {
   function distance(coordsStart, coordsEnd) {
     const result = getPreciseDistance(
       {latitude: coordsStart[1], longitude: coordsStart[0]},
-      {latitude: coordsEnd[1], longitude: coordsEnd[1]},
+      {latitude: coordsEnd[1], longitude: coordsEnd[0]},
     );
     return result;
   }
@@ -63,7 +63,7 @@ const PedidosGusto = ({navigation}) => {
       lat1: startingLocation[1],
       lng2: PedidosLocation[0],
       lat2: PedidosLocation[1],
-      distance: distance(startingLocation, PedidosLocation) / 1000,
+      distance: distance(startingLocation, PedidosLocation) / 1000 / 100,
       mobility_id: vehicle,
       description: confirmForm.description,
       address: confirmForm.address,

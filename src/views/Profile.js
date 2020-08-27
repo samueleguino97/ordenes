@@ -21,7 +21,7 @@ const Profile = () => {
   const {user, logout} = useAuth();
   const [profileForm, setProfileField] = useFormState(user);
   const [imageToUpload, setImageToUpload] = useState();
-  const {dispatch} = useNavigation();
+  const {dispatch, navigate} = useNavigation();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -143,6 +143,13 @@ const Profile = () => {
           style={styles.changePasswordButton}>
           <View style={styles.button}>
             <Text style={styles.textButton}>Cambiar Password</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigate('PedidosUsuario')}
+          style={styles.changePasswordButton}>
+          <View style={styles.button}>
+            <Text style={styles.textButton}>Ver Pedidos</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>

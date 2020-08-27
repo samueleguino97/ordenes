@@ -114,11 +114,13 @@ function Pedido() {
         <Text>TOTAL:</Text>
         <Text>Bs. {orden.total.toFixed(2)}</Text>
       </View>
-      <TouchableOpacity onPress={handleTake}>
-        <View style={styles.take}>
-          <Text>Tomar Pedido</Text>
-        </View>
-      </TouchableOpacity>
+      {currentOrder.state !== 'en proceso' && (
+        <TouchableOpacity onPress={handleTake}>
+          <View style={styles.take}>
+            <Text>Tomar Pedido</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 }

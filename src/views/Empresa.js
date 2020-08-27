@@ -36,6 +36,17 @@ const Empresa = () => {
           );
         })}
       </ScrollView>
+      <TouchableOpacity onPress={() => navigate('OpinionEmpresa')}>
+        <View
+          style={{
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'lightgray',
+          }}>
+          <Text>Ver Opinion</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
           navigate('FullMap', {

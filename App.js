@@ -77,6 +77,11 @@ function Main() {
             options={{title: 'Pedidos Gusto'}}
           />
           <MainStack.Screen
+            name="PedidosUsuario"
+            component={PedidoProducts}
+            options={{title: 'Pedidos'}}
+          />
+          <MainStack.Screen
             name="PedidoProducts"
             component={PedidoProducts}
             options={{title: 'Productos'}}
