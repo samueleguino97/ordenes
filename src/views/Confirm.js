@@ -53,6 +53,7 @@ const Confirm = ({navigation}) => {
       description: confirmForm.description,
       products_name: (await cart.getItems()).map(item => item.name),
       products_quantity: (await cart.getItems()).map(item => item.quantity),
+      celular: user.mobile,
     });
     await cart.cleanCart();
     setModalIsOpen(true);

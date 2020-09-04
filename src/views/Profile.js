@@ -26,7 +26,7 @@ const Profile = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function updateImage() {
-    ImagePicker.showImagePicker(
+    ImagePicker.launchImageLibrary(
       {
         title: 'Selecciona tu foto de perfil',
       },

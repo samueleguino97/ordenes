@@ -60,7 +60,7 @@ export default function Signup() {
     }
   }
   function updateImage() {
-    ImagePicker.showImagePicker(
+    ImagePicker.launchImageLibrary(
       {
         title: 'Selecciona tu foto de perfil',
       },
