@@ -59,7 +59,7 @@ const PedidosGusto = ({navigation}) => {
     await post('set_pleasure', {
       title: confirmForm.title,
       transportation_cost:
-        distance(startingLocation, PedidosLocation) / 1000 / 100,
+        distance(startingLocation, PedidosLocation) / 1000 / 10,
       lng1: startingLocation[0],
       lat1: startingLocation[1],
       lng2: PedidosLocation[0],
@@ -158,33 +158,14 @@ const PedidosGusto = ({navigation}) => {
       <View style={styles.containerDetails}>
         <View style={styles.containerTotalPrice}>
           <View style={styles.priceItem}>
-            <Text>TOTAL PEDIDO:</Text>
-            <Text style={styles.price}>
-              {' '}
-              Bs {parseFloat(cart.getTotal()).toFixed(2)}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.containerTotalPrice}>
-          <View style={styles.priceItem}>
             <Text>Costo Distancia:</Text>
             <Text style={styles.price}>
               Bs
               {!!startingLocation && !!PedidosLocation
                 ? parseFloat(
-                    distance(startingLocation, PedidosLocation) / 1000 / 100,
+                    distance(startingLocation, PedidosLocation) / 1000 / 10,
                   ).toFixed(2)
                 : 'Inserte ubicaciones'}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.containerTotalPrice}>
-          <View style={styles.priceItem}>
-            <Text>TOTAL:</Text>
-            <Text style={styles.price}>
-              {' '}
-              Bs {parseFloat(cart.getTotal()).toFixed(2)}
             </Text>
           </View>
         </View>
