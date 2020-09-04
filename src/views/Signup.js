@@ -22,12 +22,12 @@ export default function Signup() {
 
   const [clientType, setClientType] = useState('Client');
   const [errors, setErrors] = useState([]);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
 
   const [signupForm, setField] = useFormState({
     first_name: '',
     type_mobility: 1,
-    type_dni: 1,
+    type_dni: 1111111,
     last_name: '',
     email: '',
     password: '',
@@ -37,6 +37,7 @@ export default function Signup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
     signupForm.image = 'data:image/jpeg;base64,' + image;
+
     const user = await register(signupForm);
     if (user.errors) {
       setErrors(Object.entries(user.errors));
@@ -121,6 +122,13 @@ export default function Signup() {
             <TextInput
               onChangeText={setField('last_name')}
               placeholder="Apellidos"
+              style={{width: '100%'}}
+            />
+          </View>
+          <View style={styles.textInput}>
+            <TextInput
+              onChangeText={setField('type_dni')}
+              placeholder="CI"
               style={{width: '100%'}}
             />
           </View>
