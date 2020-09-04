@@ -14,38 +14,60 @@ const PedidosUsuario = () => {
   const {navigate} = useNavigation();
 
   useEffect(() => {
+    refresh();
+  }, []);
+  function refresh() {
     get('get_orders').then(result => {
       setOrdenes(result);
     });
     get('get_pleasure').then(result => {
       setPleasures(result);
     });
-  });
+  }
   return (
-    <ScrollView>
-      {[...ordenes, ...pleasures]
-        ?.filter(
-          item => item.user_id?.id === user?.id || item.user_id === user?.id,
-        )
-        .map(item => (
-          <TouchableOpacity
-            onPress={() =>
-              navigate('FullMap', {
-                start: [parseFloat(item?.lng), parseFloat(item?.lat)],
-              })
-            }>
-            <View>
-              <View style={styles.itemInfo}>
-                <Text style={styles.result1}>{item.mobility}</Text>
-                <Text style={styles.result1}>{item.address}</Text>
-                <Text style={styles.result1}>{item.state}</Text>
-              </View>
-              <View>
-                <Text>Bs. {parseFloat(item.total).toFixed(2)}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+    <ScrollView style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        {[...ordenes, ...pleasures]
+          ?.filter(
+            item => item.user_id?.id === user?.id || item.user_id === user?.id,
+          )
+          .map(item => {
+            console.log(item);
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigate('FullMap', {
+                    start: [
+                      parseFloat(
+                        item.longitude_start ? item.longitude_start : item.lng,
+                      ),
+                      parseFloat(
+                        item.latitude_start ? item.latitude_start : item.lat,
+                      ),
+                    ],
+                  })
+                }>
+                <View
+                  style={{
+                    margin: 8,
+                    padding: 8,
+                    backgroundColor: 'white',
+                    borderRadius: 8,
+                    elevation: 8,
+                  }}>
+                  <View style={styles.itemInfo}>
+                    <Text style={styles.result1}>{item.mobility}</Text>
+                    <Text style={styles.result1}>{item.address}</Text>
+                    <Text style={styles.result1}>{item.state}</Text>
+                  </View>
+                  <View>
+                    <Text>Bs. {parseFloat(item.total).toFixed(2)}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+      </View>
     </ScrollView>
   );
 };

@@ -17,6 +17,7 @@ export default function Empresas() {
   const {navigate} = useNavigation();
 
   useEffect(() => {
+    console.log('huh');
     refresh();
   }, []);
 
@@ -55,6 +56,17 @@ export default function Empresas() {
           );
         })}
       </ScrollView>
+      <TouchableOpacity onPress={() => navigate('OpinionEmpresa')}>
+        <View
+          style={{
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'lightgray',
+          }}>
+          <Text>Ver Opiniones</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigate('PedidosGusto')}>
         <View
           style={{

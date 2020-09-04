@@ -19,11 +19,9 @@ function EmpresasProvider({children}) {
 
   const refreshCompanies = useCallback(() => {
     getAccessToken().then(token => {
-      if (token) {
-        get('get_companies').then(resultados => {
-          setEmpresas(resultados);
-        });
-      }
+      get('get_companies').then(resultados => {
+        setEmpresas(resultados);
+      });
     });
   }, []);
 

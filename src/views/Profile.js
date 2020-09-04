@@ -19,7 +19,7 @@ import ChangePassword from './ChangePassword';
 import Modal from 'react-native-modal';
 const Profile = () => {
   const {user, logout} = useAuth();
-  const [profileForm, setProfileField] = useFormState(user);
+  const [profileForm, setProfileField] = useFormState(user || {});
   const [imageToUpload, setImageToUpload] = useState();
   const {dispatch, navigate} = useNavigation();
 
@@ -48,14 +48,18 @@ const Profile = () => {
     );
   }
   async function updateUser() {
-    const result = await backend.request('edit_client', 'POST', {
+    const options = {
       username: profileForm.username,
       first_name: profileForm.first_name,
       last_name: profileForm.last_name,
       email: profileForm.email,
       dni: 1,
-      image: imageToUpload ? imageToUpload : profileForm.image,
-    });
+    };
+    if (imageToUpload) {
+      options.image = imageToUpload;
+    }
+
+    const result = await backend.request('edit_client', 'POST', options);
     ToastAndroid.show('Se han actualizado tus datos', ToastAndroid.LONG);
   }
   async function resetPass() {

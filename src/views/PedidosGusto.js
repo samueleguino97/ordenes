@@ -58,12 +58,13 @@ const PedidosGusto = ({navigation}) => {
   async function handleOrder() {
     await post('set_pleasure', {
       title: confirmForm.title,
-      total: cart.getTotal(),
+      transportation_cost:
+        distance(startingLocation, PedidosLocation) / 1000 / 100,
       lng1: startingLocation[0],
       lat1: startingLocation[1],
       lng2: PedidosLocation[0],
       lat2: PedidosLocation[1],
-      distance: distance(startingLocation, PedidosLocation) / 1000 / 100,
+      distance: distance(startingLocation, PedidosLocation),
       mobility_id: vehicle,
       description: confirmForm.description,
       address: confirmForm.address,
@@ -93,6 +94,16 @@ const PedidosGusto = ({navigation}) => {
             style={styles.textInput}
             value={confirmForm.description}
             onChangeText={setConfirmField('description')}
+          />
+        </View>
+      </View>
+      <View style={styles.containerTextInput}>
+        <View>
+          <TextInput
+            placeholder="Direccion"
+            style={styles.textInputSmall}
+            value={confirmForm.address}
+            onChangeText={setConfirmField('address')}
           />
         </View>
       </View>

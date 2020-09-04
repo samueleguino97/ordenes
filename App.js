@@ -24,6 +24,8 @@ import Success from './src/views/Success';
 import {ScrollView, PermissionsAndroid} from 'react-native';
 import PedidosGusto from './src/views/PedidosGusto';
 import PedidoProducts from './src/views/PedidoProducts';
+import OpinionEmpresa from './src/views/OpinionEmpresa';
+import PedidosUsuario from './src/views/PedidosUsuario';
 
 Geolocation.setRNConfiguration({
   enableHighAccuracy: false,
@@ -50,7 +52,7 @@ function Main() {
   return (
     <Providers>
       <NavigationContainer>
-        <MainStack.Navigator initialRouteName="Loader">
+        <MainStack.Navigator initialRouteName="Empresas">
           <MainStack.Screen
             name="Loader"
             component={Loader}
@@ -78,7 +80,7 @@ function Main() {
           />
           <MainStack.Screen
             name="PedidosUsuario"
-            component={PedidoProducts}
+            component={PedidosUsuario}
             options={{title: 'Pedidos'}}
           />
           <MainStack.Screen
@@ -133,7 +135,7 @@ function Main() {
           />
           <MainStack.Screen
             name="OpinionEmpresa"
-            component={Empresa}
+            component={OpinionEmpresa}
             options={{title: 'Opiniones'}}
           />
           <MainStack.Screen
