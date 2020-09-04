@@ -53,10 +53,9 @@ const Profile = () => {
       first_name: profileForm.first_name,
       last_name: profileForm.last_name,
       email: profileForm.email,
-      dni: 1,
     };
     if (imageToUpload) {
-      options.image = imageToUpload;
+      options.image = 'data:image/jpeg;base64,' + imageToUpload;
     }
 
     const result = await backend.request('edit_client', 'POST', options);

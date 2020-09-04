@@ -36,7 +36,7 @@ export default function Signup() {
   async function handleSignup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
-    signupForm.image = image;
+    signupForm.image = 'data:image/jpeg;base64,' + image;
     const user = await register(signupForm);
     if (user.errors) {
       setErrors(Object.entries(user.errors));
