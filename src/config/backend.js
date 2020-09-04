@@ -24,7 +24,6 @@ class Backend {
     if (accessToken) {
       data.access_token = accessToken;
     }
-    data.access_token = 'yyom5OHbENr1PlWfTVTAciWGthaoFmv2HdwQmDYEVkpNctjQBe';
 
     if (method === 'GET') {
       options.method = method;
@@ -42,15 +41,17 @@ class Backend {
       options.headers = headers;
       options.method = method;
     }
-    console.log(requestUrl, options);
+    // console.log(requestUrl, options);
     const requestResult = await fetch(requestUrl, options);
     console.log(requestResult);
     if (requestResult.status === 404) {
       let error = new Error();
 
       error = {...error, message: 'Endpoint not found'};
+      console.log(error);
     }
     if (requestResult.status === 409) {
+      console.log(await requestResult.json());
       throw new Error('Server Errpr');
     }
 

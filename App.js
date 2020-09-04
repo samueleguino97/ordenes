@@ -52,7 +52,7 @@ function Main() {
   return (
     <Providers>
       <NavigationContainer>
-        <MainStack.Navigator initialRouteName="Empresas">
+        <MainStack.Navigator initialRouteName="Loader">
           <MainStack.Screen
             name="Loader"
             component={Loader}

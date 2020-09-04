@@ -37,6 +37,7 @@ export default function Signup() {
     signupForm.username = `${signupForm.first_name.trim()} ${signupForm.last_name.trim()}`;
     signupForm.user_role = clientType;
     signupForm.image = 'data:image/jpeg;base64,' + image;
+    signupForm.type_dni = 1;
 
     const user = await register(signupForm);
     if (user.errors) {
@@ -122,13 +123,6 @@ export default function Signup() {
             <TextInput
               onChangeText={setField('last_name')}
               placeholder="Apellidos"
-              style={{width: '100%'}}
-            />
-          </View>
-          <View style={styles.textInput}>
-            <TextInput
-              onChangeText={setField('type_dni')}
-              placeholder="CI"
               style={{width: '100%'}}
             />
           </View>

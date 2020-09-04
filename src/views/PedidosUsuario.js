@@ -24,12 +24,16 @@ const PedidosUsuario = () => {
       setPleasures(result);
     });
   }
+  console.log([...ordenes, ...pleasures]);
   return (
     <ScrollView style={{flex: 1}}>
       <View style={{flex: 1}}>
         {[...ordenes, ...pleasures]
           ?.filter(
-            item => item.user_id?.id === user?.id || item.user_id === user?.id,
+            item =>
+              item.user_id?.id === user?.id ||
+              item.user_id === user?.id ||
+              item.user === user?.username,
           )
           .map(item => {
             console.log(item);
@@ -39,10 +43,14 @@ const PedidosUsuario = () => {
                   navigate('FullMap', {
                     start: [
                       parseFloat(
-                        item.longitude_start ? item.longitude_start : item.lng,
+                        item.longitude_start
+                          ? item.longitude_start
+                          : item.longitude,
                       ),
                       parseFloat(
-                        item.latitude_start ? item.latitude_start : item.lat,
+                        item.latitude_start
+                          ? item.latitude_start
+                          : item.latitude,
                       ),
                     ],
                   })

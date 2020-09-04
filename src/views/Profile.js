@@ -68,6 +68,7 @@ const Profile = () => {
       ToastAndroid.LONG,
     );
   }
+  console.log(profileForm);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
