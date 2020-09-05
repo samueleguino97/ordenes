@@ -72,7 +72,12 @@ function Pedido() {
         }>
         <View style={styles.total}>
           <Text>TOTAL PEDIDO:</Text>
-          <Text>Bs. {orden.total.toFixed(2)}</Text>
+          <Text>
+            Bs.
+            {!!pleasureOrder
+              ? parseFloat(orden.transportation_cost).toFixed(2)
+              : parseFloat(orden.total).toFixed(2)}
+          </Text>
         </View>
       </TouchableOpacity>
       {!!pleasureOrder?.longitude_start && (
@@ -112,7 +117,12 @@ function Pedido() {
       )}
       <View style={styles.total}>
         <Text>TOTAL:</Text>
-        <Text>Bs. {orden.total.toFixed(2)}</Text>
+        <Text>
+          Bs.{' '}
+          {!!pleasureOrder
+            ? parseFloat(orden.transportation_cost).toFixed(2)
+            : parseFloat(orden.total).toFixed(2)}
+        </Text>
       </View>
       {currentOrder.state !== 'en proceso' && (
         <TouchableOpacity onPress={handleTake}>
