@@ -17,12 +17,16 @@ const PedidosUsuario = () => {
     refresh();
   }, []);
   function refresh() {
-    get('get_orders').then(result => {
-      setOrdenes(result);
-    });
-    get('get_pleasure').then(result => {
-      setPleasures(result);
-    });
+    get('get_orders')
+      .then(result => {
+        setOrdenes(result);
+      })
+      .catch(err => console.log(err));
+    get('get_pleasure')
+      .then(result => {
+        setPleasures(result);
+      })
+      .catch(err => console.log(err));
   }
   console.log([...ordenes, ...pleasures]);
   return (

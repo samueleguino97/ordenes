@@ -138,7 +138,12 @@ function Pedidos({navigation}) {
                   <Text style={styles.result1}>{orden.state}</Text>
                 </View>
                 <View>
-                  <Text>Bs. {parseFloat(orden.total).toFixed(2)}</Text>
+                  <Text>
+                    Bs.{' '}
+                    {activeButton === 3
+                      ? parseFloat(orden.transportation_cost).toFixed(2)
+                      : parseFloat(orden.total).toFixed(2)}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
