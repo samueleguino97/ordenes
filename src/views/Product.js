@@ -4,7 +4,6 @@ import backend from '../config/backend';
 import {useRoute} from '@react-navigation/native';
 import cart from '../config/cart';
 import {useEmpresas} from '../context/empresas';
-import {Icon} from 'react-native-elements';
 
 const Product = ({navigation: {navigate}}) => {
   const {params: product} = useRoute();
@@ -18,7 +17,7 @@ const Product = ({navigation: {navigate}}) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={{uri: backend.getImageURI(product.image)}}
+          source={{uri: backend.getProductImageURI(product.image)}}
           style={styles.image}
         />
       </View>

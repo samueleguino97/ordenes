@@ -13,6 +13,9 @@ class Backend {
   getImageURI(imageName) {
     return `http://delivery-nube.com/public/img/company_images/${imageName}`;
   }
+  getProductImageURI(imageName) {
+    return `http://delivery-nube.com/public/img/products_images/${imageName}`;
+  }
 
   async request(endpoint = '', method = '', data = {}) {
     let requestUrl = `${this.backendUrl}/${endpoint}`;
