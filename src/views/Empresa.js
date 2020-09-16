@@ -5,9 +5,11 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {useEmpresas} from '../context/empresas';
+import backend from '../config/backend';
 
 const Empresa = () => {
   const {params: empresa} = useRoute();
@@ -29,7 +31,10 @@ const Empresa = () => {
             <TouchableOpacity onPress={() => navigate('Producto', producto)}>
               <View style={styles.producto}>
                 <Text style={styles.title}>{producto.name}</Text>
-                <View style={styles.productoImage} />
+                <Image
+                  source={{uri: backend.getProductImageURI(producto.image)}}
+                  style={styles.productoImage}
+                />
                 <Text>{parseFloat(producto.price).toFixed(2)} Bs.</Text>
               </View>
             </TouchableOpacity>
