@@ -9,12 +9,14 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useAuth} from '../context/auth';
+import {useEmpresas} from '../context/empresas';
 import useBackendRequests from '../hooks/useBackend';
 
 function Pedidos({navigation}) {
   const [activeButton, setActiveButton] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const {get} = useBackendRequests();
+  const [empresas] = useEmpresas();
 
   const [ordenes, setOrdenes] = useState([]);
   const [pleasures, setPleasures] = useState([]);
@@ -113,6 +115,7 @@ function Pedidos({navigation}) {
           </View>
         </TouchableOpacity>
         <ScrollView
+          style={{flex: 1, height: '100%'}}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -122,6 +125,7 @@ function Pedidos({navigation}) {
               key={orden.id}
               disabled={
                 orden.state === 'enviado' ||
+                orden.state === 'en proceso' ||
                 orden.state === 'rechazado' ||
                 orden.state === 'en camino'
               }
@@ -157,7 +161,7 @@ function Pedidos({navigation}) {
 export default Pedidos;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {flex: 1},
   result1: {
     flex: 1,
   },
