@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import cart from '../config/cart';
 import {useNavigation} from '@react-navigation/native';
+import backend from '../config/backend';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -30,7 +31,10 @@ const Cart = () => {
       <ScrollView contentContainerStyle={styles.container}>
         {cartItems?.map(item => (
           <View style={styles.item}>
-            <Image style={styles.image} />
+            <Image
+              source={{uri: backend.getProductImageURI(item.image)}}
+              style={styles.image}
+            />
             <View>
               <Text>{item.name}</Text>
               <Text>{item.description}</Text>

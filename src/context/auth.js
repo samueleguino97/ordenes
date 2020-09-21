@@ -64,6 +64,7 @@ export function useAuth() {
     login: handleLogin,
     isLoggedIn: authContext.isLoggedIn,
     logout: handleLogout,
+    setUser: authContext.setUser,
   };
 }
 
